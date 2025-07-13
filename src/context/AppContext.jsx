@@ -13,8 +13,6 @@ export const AppContextProvider = ({ children }) => {
 
   const { dummyCourses } = assets;
 
-  
-
   useEffect(() => {
     setCourses(dummyCourses);
   }, []);
