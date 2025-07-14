@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { useAppContext } from "../context/AppContext";
 
 const Login = () => {
@@ -9,19 +10,38 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const dummyUser =
+  const payload =
+    authState === "signup"
+      ? { name, email, password }
+      : { email, password };
+
+  console.log(authState === "signup" ? "Signup:" : "Login:", payload);
+
+  try {
+    const url =
       authState === "signup"
-        ? { name, email }
-        : { email };
+        ? "http://localhost:4000/api/users/signup"
+        : "http://localhost:4000/api/users/login";
 
-    console.log(authState === "signup" ? "Signup:" : "Login:", dummyUser);
+    const { data } = await axios.post(url, payload, {
+      withCredentials: true,
+    });
 
-    setUser(dummyUser);
+    console.log("✅ Success:", data);
+
+    setUser(data.user);
+    localStorage.setItem("token", data.token);
     navigate("/");
-  };
+  } catch (err) {
+    console.error("❌ Error:", err);
+    alert(err.response?.data?.message || "Something went wrong");
+  }
+};
+
+  
 
   return (
     <div className="flex h-screen w-full">
