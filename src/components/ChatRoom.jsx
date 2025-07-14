@@ -35,7 +35,7 @@ export default function ChatRoom() {
       message = {
         ...message,
         fileName: file.name,
-        fileUrl: URL.createObjectURL(file),
+        fileUrl: URL.createObjectURL(file), // URL.createObjectURL (temporary browser URL)
         fileType: file.type.startsWith("image/") ? "image" : "file",
       };
     }
@@ -58,7 +58,13 @@ export default function ChatRoom() {
         {messages.map((m, i) => (
           <div key={i} className="mb-2">
             <strong className="text-purple-400">{m.sender}: </strong> 
-            {m.text && <span>{m.text}</span>}
+            {m.text && <span>{m.text}</span>} {/* If the message has a .text field → render it inside a <span>. */}
+
+            {/*
+               Checks if there’s a file attached (m.fileUrl)
+                And if the file type is an image (m.fileType === "image")
+                src={m.fileUrl} → this is a temporary blob URL created earlier when file was uploaded.
+            */}
 
             {m.fileUrl && m.fileType === "image" && (
               <div>
@@ -69,6 +75,13 @@ export default function ChatRoom() {
                 />
               </div>
             )}
+
+            {/*
+                Renders an <a> link:
+                href={m.fileUrl} → download link to the file.
+                download={m.fileName} → browser will download the file with this name.
+                styled as blue & underlined for visibility.
+            */}
 
             {m.fileUrl && m.fileType === "file" && (
               <div>
@@ -109,3 +122,21 @@ export default function ChatRoom() {
     </div>
   );
 }
+
+
+/*
+
+You type: Hello
+You attach: image.jpg
+The message becomes:
+
+{
+  sender: "You",
+  text: "Hello",
+  fileName: "image.jpg",
+  fileUrl: "blob:http://...",
+  fileType: "image"
+}
+
+
+*/

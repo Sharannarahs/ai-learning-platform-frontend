@@ -5,6 +5,7 @@ const AdminLayout = () => {
   return (
     <div className="flex h-screen">
       <div className="w-64 bg-gray-800/50  text-white flex flex-col">
+      {/* left sidebar */}
         <div className="text-xl font-bold p-4 border-b border-gray-700">
           Dashboard
         </div>
@@ -21,7 +22,8 @@ const AdminLayout = () => {
           Registered Students
         </NavLink>
       </div>
-
+      
+      {/* Right sidebar */}
       <div className="flex-1 flex flex-col">
         <AdminNavbar />
         <div className="p-4 flex-1 overflow-y-auto">

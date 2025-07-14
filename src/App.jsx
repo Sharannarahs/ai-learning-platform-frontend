@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom"; //get current URL --> useLocation
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -118,3 +118,12 @@ const App = () => {
 };
 
 export default App;
+
+/*
+<AdminProtectedRoute>
+  <AdminLayout>
+    <Outlet /> ← this is where the nested route goes
+  </AdminLayout>
+</AdminProtectedRoute>
+
+*/

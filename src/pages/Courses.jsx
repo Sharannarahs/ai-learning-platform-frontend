@@ -47,3 +47,6 @@ const Courses = () => {
 };
 
 export default Courses;
+
+
+// useAppCOntext -> course -> courseCard

@@ -21,7 +21,7 @@ const PDFSummarizer = () => {
       setFile(null);
       return false;
     }
-    if (selected.size > 10 * 1024 * 1024) {
+    if (selected.size > 10 * 1024 * 1024) { // less than 10 mb
       toast.error("File size must be under 10MB.")
       //setError("File size must be under 10MB.");
       setFile(null);
@@ -31,13 +31,13 @@ const PDFSummarizer = () => {
     return true;
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e) => { // choose via input
     const selected = e.target.files[0];
     if (!selected) return;
     if (validateFile(selected)) setFile(selected);
   };
 
-  const handleDrop = (e) => {
+  const handleDrop = (e) => { // drag and drop
     e.preventDefault();
     const dropped = e.dataTransfer.files[0];
     if (!dropped) return;
@@ -81,6 +81,11 @@ const PDFSummarizer = () => {
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onClick={() => document.getElementById("file-upload").click()}
+        //🔹 document.getElementById("file-upload")
+        // → finds the hidden <input> element on the page with id="file-upload"
+        // </input>🔹 .click()
+        // → programmatically “clicks” the <input>, which opens the OS file picker dialog.
+        
         className="w-full max-w-2xl min-h-[200px] md:min-h-[250px] p-6 border-2 border-dashed border-purple-500 rounded-lg cursor-pointer bg-gray-800 hover:bg-gray-700 transition flex flex-col items-center justify-center text-center"
       >
         <p className="text-gray-300">Drag & drop your PDF, PPT, or Word file here</p>

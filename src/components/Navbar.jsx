@@ -64,7 +64,7 @@ const Navbar = () => {
   return (
     <div className="w-full mt-4">
       <nav className="flex items-center justify-between border border-slate-600 px-6 py-4 rounded-full text-white text-sm bg-black/50 backdrop-blur w-full relative">
-        <NavLink to={user ? "/courses" : "/login"} className="mr-2">
+        <NavLink to={user ? "/courses" : "/"} className="mr-2">
           <img src={assets.logo} alt="Logo" className="w-10 border rounded-md" />
         </NavLink>
 

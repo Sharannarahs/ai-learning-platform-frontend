@@ -1,0 +1,63 @@
+Suppose the server sends a message to the client when a new chat message arrives.
+
+Client
+
+socket.on("receive-message", (msg) => {
+  console.log("New message:", msg);
+});
+When the server emits:
+
+
+socket.emit("receive-message", { text: "hello", sender: "Alice" });
+the client’s callback runs:
+
+
+New message: { text: "hello", sender: "Alice" }
+
+Similarly, on the server you can also use .on() to listen to events from the client:
+
+Server
+
+io.on("connection", (socket) => {
+  console.log("A user connected");
+
+  socket.on("join-room", (roomId) => {
+    console.log(`User joined room: ${roomId}`);
+    socket.join(roomId);
+  });
+});
+And the client sends:
+
+
+socket.emit("join-room", "room1");
+Server prints:
+
+
+User joined room: room1
+
+
+
+📨 emit → Like shouting: “Dinner is ready!”
+👂 on → Like standing in the kitchen waiting to hear “Dinner is ready!”, and then reacting.
+
+You use emit to send an event,
+and on to define how you respond when that event is received.
+
+✅ On client:
+
+emit → send to server
+
+on → listen for server messages
+
+✅ On server:
+
+emit → send to client(s)
+
+on → listen for client messages
+
+| 🔷 Feature      | **`emit`**                                              | **`on`**                                         |
+| --------------- | ------------------------------------------------------- | ------------------------------------------------ |
+| 📤 Purpose      | To **send/trigger an event**                            | To **listen/respond to an event**                |
+| 🚀 Direction    | You call it to send data to the other side (or locally) | You wait for someone else to call `emit`         |
+| 🧪 Who uses it? | The sender (client → server or server → client)         | The receiver (client or server)                  |
+| ⚡ Behavior      | Fires an event immediately                              | Registers a handler to run when the event occurs |

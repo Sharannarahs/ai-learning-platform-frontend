@@ -23,7 +23,7 @@ const CommunityList = () => {
             {c.name}
             {unreadCounts[c.id] > 0 && (
               <span className="bg-green-500 rounded-full px-2 text-xs">
-                {unreadCounts[c.id]}
+                {unreadCounts[c.id]}  {/* If there are unread messages (unreadCounts[c.id] > 0), then render a small badge: */}     
               </span>
             )}
           </li>
