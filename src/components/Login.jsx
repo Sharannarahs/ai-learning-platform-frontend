@@ -27,9 +27,10 @@ const Login = () => {
         : "http://localhost:4000/api/users/login";
 
     const { data } = await axios.post(url, payload, {
-      withCredentials: true,
+      withCredentials: true,// withCredentials: true → sends cookies (like session id or JWT if the server sets Set-Cookie
     });
 
+    // When the backend responds successfully, you do:
     console.log("✅ Success:", data);
 
     setUser(data.user);
@@ -188,3 +189,15 @@ const Login = () => {
 };
 
 export default Login;
+
+
+/*
+
+✅ User submits form →
+✅ React builds payload →
+✅ Sends HTTP POST to /login or /signup →
+✅ Backend validates credentials →
+✅ Backend responds with user & token →
+✅ Frontend updates state, saves token, navigates.
+
+*/

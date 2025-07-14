@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 
@@ -55,12 +56,30 @@ const PDFSummarizer = () => {
       return;
     }
     setLoading(true);
-    setError("");
+
     try {
-      await new Promise((res) => setTimeout(res, 2000));
-      alert(`✅ Summary generated for: ${file.name}`);
-    } catch (err) {
-      setError("Something went wrong.");
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const {data} = await axios.post(
+        "http://localhost:4000/api/summarize",
+        formData,
+        
+      );
+      console.log("API response:", data);
+
+      const blob = new Blob([data.summary], {type: "text/plain;charset=utf-8"});
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "summary.txt";
+      link.click();
+
+      toast.success("Summary generated & downloaded.");
+      
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong.");
+
     } finally {
       setLoading(false);
     }
